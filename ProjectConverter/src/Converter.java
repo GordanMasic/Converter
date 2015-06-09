@@ -10,8 +10,6 @@ public class Converter {
 		return currency1;
 	}
 
-	
-
 	public static void getValue(String[] valute, double[] value) {
 
 		int counter = 0;
@@ -62,35 +60,34 @@ public class Converter {
 		}
 		return index;
 	}
-	
+
 	public static double getValueAt(int index, double[] arr2) {
 		double value = 0;
 		value += arr2[index];
 		return value;
 	}
 
-	public static void convert(double value1, double value2, double money) {
+	public static double convert(double value1, double value2, double money) {
 		double converted = money * (value2 / value1);
-		System.out.printf("%.3f", converted);
+		return converted;
+		//System.out.printf("%.3f", converted);
 	}
-	
-	
-	public static double inputMoney(){
-		
-		Scanner in = new Scanner (System.in);
-		
-		System.out.println("How much money do you want to convert? " );
-		
-		double value = in.nextDouble();
-		
-		in.close();
-		
-		return value;
-		
-	}
-	
-	public static void main(String[] args) {
 
+	public static double inputMoney() {
+
+		Scanner in = new Scanner(System.in);
+
+		System.out.println("How much money do you want to convert? ");
+
+		double value = in.nextDouble();
+
+		in.close();
+
+		return value;
+
+	}
+	
+	public static void splitFromFile() {
 		TextIO.readFile("src/ba/bitcamp/dreamteam/Currency.txt");
 		System.out.println("Currency list:");
 		while (!TextIO.eof()) {
@@ -101,6 +98,9 @@ public class Converter {
 			System.out.println(part1);
 		}
 		
+	}
+	
+	public static void getConvertedMoney() {
 		int counter = 0;
 		TextIO.readFile("src/ba/bitcamp/dreamteam/Currency.txt");
 		while (!TextIO.eof()) {
@@ -109,33 +109,38 @@ public class Converter {
 			counter++;
 
 		}
-		
-	
 
 		TextIO.readStandardInput();
 
 		String[] arr1 = new String[counter];
 		double[] arr2 = new double[counter];
 
-		System.out.println("Input valute1: ");
+		System.out.println("Which currency do you want to convert: ");
 		String nameOfCurrency1 = inputCurrency1();
 		getValue(arr1, arr2);
 		int index = getIndex(nameOfCurrency1, arr1);
-		
+
 		double value1 = getValueAt(index, arr2);
-		System.out.println("Input valute2: ");
+		System.out.println("To which currency do you want to convert: ");
 		String nameOfCurrency2 = inputCurrency1();
 		getValue(arr1, arr2);
 		int index1 = getIndex(nameOfCurrency2, arr1);
-		
+
 		double value2 = getValueAt(index1, arr2);
-		
+
 		double money = inputMoney();
-		
-		System.out.println("You want to convert " + money + " "+ nameOfCurrency1);
-		convert(value1, value2, money );
-		
-		
+
+		System.out.println("You want to convert " + money + " "
+				+ nameOfCurrency1);
+		System.out.printf("You get: %.3f %s",convert(value1, value2, money),nameOfCurrency2);
+	}
+	
+
+	public static void main(String[] args) {
+
+		splitFromFile();
+
+		getConvertedMoney();
 
 	}
 }
